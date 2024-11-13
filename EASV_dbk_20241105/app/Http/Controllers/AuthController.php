@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Hash;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -37,6 +39,32 @@ class AuthController extends Controller
             "count"=>1
         ]);
 
+      
         
     }
+    public function logout(Request $request){
+        if(!Auth::attempt($request->only("email","password"))){
+            "success"=> false,
+            "errors"=>401,
+            "msg"=> "No se reconocen las credenciales"
+        
+    }
+
+
+    public function me(Request $request){
+        return response()->json([
+            "success"=> true,
+            "errors"=>[
+                "code"=> 2000,
+                "msg"=> ""
+                
+                ],
+                "data"=>"Ha iniciado sesion correctamente",
+                "count"=> 1
+                ],status:200);
+    }
+
+
+
+
 }
